@@ -7,8 +7,8 @@ const prisma = new PrismaClient() // use `prisma` in your application to read an
 const dateNow = new Date();       // instatiate date 
 
 /**
- * get all grades
- * @function getAllGrades function name
+ * get all teachers
+ * @function getAllTeachers function name
  * @param req receive request as input
  * @param res send response back to calling function
  */
@@ -23,6 +23,7 @@ async function getAllTeachers(req, res) {
     catch (err) {
         console.log('getAllTeachers error:', err)
         res.send(JSON.stringify({ "status": 500, "error": err, "response": null }));
+        return;
     }
 }
 
@@ -39,7 +40,7 @@ async function getSingleTeacher(req, res) {
     try {
 
         if (check(teacherid).isEmail().notEmpty()) {
-            csgi_teacher = await prisma.csgi_teacher_v.findUnique({
+            csgi_teacher = await prisma.csgi_teacher_v.findMany({
                 where: {
                     teacheremail: teacherid,
                 }
