@@ -162,8 +162,8 @@ model csgi_user_role {
 }
 
 model csgi_alluser_v {
-  userid 	Int
-  email  	String
+  userid 	Int 
+  email  	String @unique
   role		String
 }
 
@@ -172,7 +172,7 @@ model csgi_detailreport_v {
   classname		  String
   gradeid 		  Int
   gradecode		  String
-  teacherid		  Int 
+  teacherid		  Int       @unique
   teachername	  String
   teacheremail	String
   periodid		  Int
@@ -189,7 +189,7 @@ model csgi_summaryreport_v {
   classname		  String
   gradeid		    Int
   gradecode		  String
-  teacherid		  Int
+  teacherid		  Int     @unique
   teacheremail	String
   teachername	  String
   student_name	String
@@ -199,9 +199,10 @@ model csgi_summaryreport_v {
 }
 
 model csgi_teacher_v {
-  teacherid		  Int
+  teacherid		  Int     @unique
   teacher		    String
-  teacheremail	String
+  teacheremail	String  @unique
   teachername	  String
   rolename		  String
 }
+

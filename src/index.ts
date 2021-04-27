@@ -1,5 +1,6 @@
-//import express from 'express'
-const express = require("express");
+import express from 'express'
+//let express = require('express');   // Strict Typescript and implicity
+
 const { PrismaClient } = require('@prisma/client');
 const { getAllStudents, getSingleStudent, addNewStudent, updateStudent, deleteStudent } = require('../API/student');
 const { getAllUsers, getSingleUser, updateUser, deleteUser } = require('../API/users');
@@ -11,6 +12,8 @@ const { getAllRosters, getSingleRoster, addNewRoster, updateRoster, deleteRoster
 const { getAllTeachers, getSingleTeacher, getAllSummaryReport, getAllDetailReport, getAllSummaryQuarter } = require('../API/dbviews');
 const { login } = require('../API/authenticate');
 const { registerUser } = require('../API/register');
+var cors = require('cors');
+const bodyParser = require('body-parser');
 const morgan = require('morgan');
 
 /* still to do Menu, MenuRole,UserRole
@@ -24,7 +27,8 @@ const {getAllPeriods, getSinglePeriod, addNewPeriod, updatePeriod, deletePeriod 
 const prisma = new PrismaClient()
 const app = express()
 
-app.use(express.json(), morgan('combined'))
+
+app.use(express.json(), morgan('combined'), cors(), bodyParser.urlencoded({extended: true}))
 
 // ... your REST API routes will go here
 

@@ -45,22 +45,19 @@ async function getSingleUser(req, res) {
                     email: id,
                 }
             })
-        } else{
-            if (parseInt(id) && check(id).notEmpty()) {
+      
+        }
+
+         if (parseInt(id) && check(id).notEmpty()) {
                 let local_id = parseInt(id)
                 csgi_user = await prisma.csgi_user.findUnique({
                     where: {
                         userid: local_id,
                     }
                 })
-            }else{
-                console.log('Missing user identifier, not provided');
-                res.send(JSON.stringify({ "status": 302, "error": 'Missing user identifier, not provided', "response": null }));
-                return;
-            }
-        }
-
-        res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_user}));
+               // res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_user}));
+          }
+          res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_user}));    
     } catch (err) {
          console.log('getSingleUser error:', err)
          res.send(JSON.stringify({"status": 500, "error": err, "response": null}));
