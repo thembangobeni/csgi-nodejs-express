@@ -19,7 +19,7 @@ async function getAllRosters(req, res) {
     try {
         const allRosters = await prisma.csgi_roster.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allRosters }));
+        res.send(JSON.stringify(allRosters));
         console.log('getAllRosters: success')
     } catch (err) {
         console.log('getAllRosters error:', err)
@@ -49,7 +49,7 @@ async function getSingleRoster(req, res) {
 
 
             //res.json(csgi_roster)
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": csgi_roster }));
+            res.send(JSON.stringify(csgi_roster));
         } else {
             console.log('Roster rosterid is Empty: ', rosterid);
             res.send(JSON.stringify({ "status": 302, "error": 'Missing input identifier', "response": null }));
@@ -108,7 +108,7 @@ async function addNewRoster(req, res) {
                 skipDuplicates: true,
             })
             console.log('Roster creation successful Rosterid: ', rosterCreate.rosterid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": rosterCreate }));
+            res.send(JSON.stringify(rosterCreate));
         }
         catch (err) {
             res.send(JSON.stringify({ "status": 500, "error": ' registering Roster ' + err, "response": null }));
@@ -146,7 +146,7 @@ async function updateRoster(req, res) {
             })
 
             console.log('User update successful RosterId: ', rosterid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": post_roster }));
+            res.send(JSON.stringify(post_roster));
         } else {
             console.log('Roster rosterid is Empty: ', rosterid);
             res.send(JSON.stringify({ "status": 302, "error": 'Missing input identifier', "response": null }));
@@ -179,7 +179,7 @@ async function deleteRoster(req, res) {
             })
 
             console.log('Roster deleted successful Rosterid: ', rosterid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Roster delete success' }));
+            res.send(JSON.stringify({ "response": 'Roster delete success' }));
         } else {
             console.log('Roster rosterid is Empty: ', rosterid);
             res.send(JSON.stringify({ "status": 302, "error": 'Missing input identifier', "response": null }));

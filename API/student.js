@@ -22,8 +22,9 @@ async function getAllStudents(req, res) {
     try {
         const allAllStudents = await prisma.csgi_student.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allAllStudents }));
-        console.log('getAllStudents: success')
+      // res.send(JSON.stringify({ "status": 200, "error": null, "response": allAllStudents }));
+       res.send(JSON.stringify(allAllStudents));
+       // console.log('getAllStudents: success',JSON.stringify(allAllStudents));
     } catch (err) {
         console.log('getAllStudents error:', err)
         res.send(JSON.stringify({ "status": 500, "error": err, "response": null }));
@@ -49,8 +50,8 @@ async function getSingleStudent(req, res) {
                     studentid: parseInt(studentid),
                 }
             })
-        
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": csgi_student }));
+        console.log('Student studentid founf: ', studentid);
+        res.send(JSON.stringify(csgi_student));
         } else {
             console.log('Student studentid is Empty: ', studentid);
             res.send(JSON.stringify({ "status": 302, "error": 'Missing input identifier', "response": null }));
@@ -106,7 +107,7 @@ async function addNewStudent(req, res) {
                 skipDuplicates: true,
             })
             console.log('Student creation successful Studentid: ', studentCreate.studentid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": 'User register successful' }));
+            res.send(JSON.stringify({ "response": 'User register successful' }));
         }
         catch (err) {
             res.send(JSON.stringify({ "status": 500, "error": ' registering student ' + err, "response": null }));
@@ -145,7 +146,7 @@ async function updateStudent(req, res) {
             })
 
         console.log('User update successful StudentId: ', studentid);
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": post_student }));
+        res.send(JSON.stringify(post_student));
         }else {
             console.log('Student studentid is Empty: ', studentid);
             res.send(JSON.stringify({ "status": 302, "error": 'Missing input identifier', "response": null }));
@@ -180,7 +181,7 @@ async function deleteStudent(req, res) {
             })
 
             console.log('Student deleted successful studentid: ', studentid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": 'student delete success' }));
+            res.send(JSON.stringify({"response": 'student delete success' }));
         } else {
             console.log('Student studentid is Empty: ', studentid);
             res.send(JSON.stringify({ "status": 302, "error": 'Missing input identifier', "response": null }));

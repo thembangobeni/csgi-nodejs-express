@@ -24,7 +24,7 @@ async function getAllClasses(req, res) {
     try {
         const allClasses = await prisma.csgi_class.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allClasses }));
+        res.send(allClasses);
         console.log('getAllClasses: success')
         console.log('getAllClasss: End: ', dateNowFormat, ' Time: ', dateNowHHMM)
     } catch (err) {
@@ -53,7 +53,7 @@ async function getSingleClass(req, res) {
                 }
             })
 
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": csgi_class }));
+            res.send(csgi_class);
         }else {
             console.log('Class Classid is Empty: ', classid);
             res.send(JSON.stringify({ "status": 302, "error":  'Missing input identifier', "response": null }));
@@ -110,7 +110,7 @@ async function addNewClass(req, res) {
                 skipDuplicates: true,
             })
             console.log('Class creation successful classid: ', classCreate.classid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": classCreate }));
+            res.send(classCreate);
         }
         catch (err) {
             res.send(JSON.stringify({ "status": 500, "error": ' registering Class ' + err, "response": null }));
@@ -149,7 +149,7 @@ async function updateClass(req, res) {
             })
 
             console.log('User update successful ClassId: ', classid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": post_class }));
+            res.send(post_class);
         } else {
                 console.log('Class Classid is Empty: ', classid);
                 res.send(JSON.stringify({ "status": 302, "error":  'Missing input identifier', "response": null }));
@@ -184,7 +184,7 @@ async function deleteClass(req, res) {
             })
 
             console.log('Class deleted successful Classid: ', classid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Class delete success' }));
+            res.send(JSON.stringify({"response": 'Class delete success' }));
         } else {
                 console.log('Class Classid is Empty: ', classid);
                 res.send(JSON.stringify({ "status": 302, "error":  'Missing input identifier', "response": null }));

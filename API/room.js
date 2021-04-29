@@ -17,7 +17,7 @@ async function getAllRooms(req, res) {
     try {
         const allRooms = await prisma.csgi_room.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allRooms }));
+        res.send(JSON.stringify(allRooms));
         console.log('getAllRooms: success')
     } catch (err) {
         console.log('getAllRooms error:', err)
@@ -45,7 +45,7 @@ async function getSingleRoom(req, res) {
                 }
             })
 
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": csgi_room }));
+            res.send(JSON.stringify(csgi_room));
         } else{
             res.send(JSON.stringify({ "status": 302, "error": 'Missing identifier' }));
             return;
@@ -97,7 +97,7 @@ async function addNewRoom(req, res) {
                 skipDuplicates: true,
             })
             console.log('room creation successful roomid: ', roomCreate.roomid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": roomCreate }));
+            res.send(JSON.stringify(roomCreate));
         }
         catch (err) {
             res.send(JSON.stringify({ "status": 500, "error": ' registering room ' + err, "response": null }));
@@ -135,7 +135,7 @@ async function updateRoom(req, res) {
             })
 
             console.log('Room update successful roomId: ', roomid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": post_room }));
+            res.send(JSON.stringify(post_room));
         } else{
             res.send(JSON.stringify({ "status": 302, "error": 'Missing identifier' }));
             return;
@@ -168,7 +168,7 @@ async function deleteRoom(req, res) {
             })
 
         console.log('room deleted successful roomid: ', roomid);
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": 'room delete success' }));
+        res.send(JSON.stringify({"response": 'room delete success' }));
         } else{
         res.send(JSON.stringify({ "status": 302, "error": 'Missing identifier' }));
         return;

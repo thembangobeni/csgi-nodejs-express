@@ -17,7 +17,7 @@ async function getAllGrades(req, res) {
     try {
         const allgrades = await prisma.csgi_grade.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allgrades }));
+        res.send(JSON.stringify(allgrades));
         console.log('getAllgrades: success')
     }
     catch (err) {
@@ -47,7 +47,7 @@ async function getSingleGrade(req, res) {
             })
         }
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": csgi_grade }));
+        res.send(JSON.stringify(csgi_grade));
     }
     catch (err) {
         res.send(JSON.stringify({ "status": 500, "error": err, "response": null }));
@@ -94,7 +94,7 @@ async function addNewGrade(req, res) {
                 skipDuplicates: true,
             })
             console.log('grade creation successful gradeid: ', gradeCreate.gradeid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": gradeCreate }));
+            res.send(JSON.stringify(gradeCreate));
         }
         catch (err) {
             res.send(JSON.stringify({ "status": 500, "error": ' registering grade ' + err, "response": null }));
@@ -131,7 +131,7 @@ async function updateGrade(req, res) {
             })
 
         console.log('grade update successful gradeId: ', gradeid);
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": post_grade }));
+        res.send(JSON.stringify(post_grade));
         } else{
             res.send(JSON.stringify({ "status": 302, "error": 'Missing identifier' }));
             return;
@@ -163,7 +163,7 @@ async function deleteGrade(req, res) {
             })
 
         console.log('Grade deleted successful gradeid: ', gradeid);
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Grade delete success' }));
+        res.send(JSON.stringify({"response": 'Grade delete success' }));
         } else{
             res.send(JSON.stringify({ "status": 302, "error": 'Missing identifier' }));
             return;

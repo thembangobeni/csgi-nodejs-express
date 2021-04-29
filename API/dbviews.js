@@ -17,7 +17,7 @@ async function getAllTeachers(req, res) {
     try {
         const allTeachers = await prisma.csgi_teacher_v.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allTeachers }));
+        res.send(JSON.stringify(allTeachers));
         console.log('getAllTeachers: success')
     }
     catch (err) {
@@ -28,13 +28,13 @@ async function getAllTeachers(req, res) {
 }
 
 /**
- * select single grade
+ * select single teacher report
  * @function getSingleTeacher function name
  * @param req receive request as input
  * @param res send response back to calling function
  */
-async function getSingleTeacher(req, res) {
-    let teacherid = req.params.id
+async function getSingleTeacher2(req, res) {
+    var teacherid = req.params.id
     var csgi_teacher = {}
     console.log('getSingleTeacher: Start')
     try {
@@ -45,7 +45,9 @@ async function getSingleTeacher(req, res) {
                     teacheremail: teacherid,
                 }
             })
-        }else{
+        }
+        
+        
             if (parseInt(teacherid) && check(teacherid).notEmpty()) {
                 teacherid = parseInt(id)
                 csgi_teacher = await prisma.csgi_teacher_v.findUnique({
@@ -59,13 +61,11 @@ async function getSingleTeacher(req, res) {
                 return;
             }
 
-        }
-
-        res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_teacher}));
+            res.send(JSON.stringify(csgi_teacher)); 
     } catch (err) {
          console.log('getSingleTeacher error:', err)
          res.send(JSON.stringify({"status": 500, "error": err, "response": null}));
-         }
+         } 
 }
 
 /**
@@ -86,7 +86,8 @@ async function getSingleTeacher(req, res) {
                     teacheremail: teacherid,
                 }
             })
-        }else{
+        }
+
             if (parseInt(teacherid) && check(teacherid).notEmpty()) {
                 teacherid = parseInt(id)
                 csgi_summaryreport = await prisma.csgi_summaryreport_v.findMany({
@@ -100,9 +101,7 @@ async function getSingleTeacher(req, res) {
                 return;
             }
 
-        }
-
-        res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_summaryreport}));
+            res.send(JSON.stringify(csgi_summaryreport));
     } catch (err) {
          console.log('getAllDetailReport error:', err)
          res.send(JSON.stringify({"status": 500, "error": err, "response": null}));
@@ -128,7 +127,7 @@ async function getSingleTeacher(req, res) {
                     teacheremail: teacherid,
                 }
             })
-        }else{
+        }
             if (parseInt(teacherid) && check(teacherid).notEmpty()) {
                 teacherid = parseInt(id)
                 csgi_summaryreport = await prisma.csgi_summaryreport_v.findMany({
@@ -142,9 +141,7 @@ async function getSingleTeacher(req, res) {
                 return;
             }
 
-        }
-
-        res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_summaryreport}));
+            res.send(JSON.stringify(csgi_summaryreport));
     } catch (err) {
          console.log('getAllSummaryReport error:', err)
          res.send(JSON.stringify({"status": 500, "error": err, "response": null}));
@@ -158,35 +155,41 @@ async function getSingleTeacher(req, res) {
  * @param req receive request as input
  * @param res send response back to calling function
  */
- async function getAllDetailReport(req, res) {
-    let teacherid = req.params.id
-    var csgi_detailreport = {}
+ async function getSingleTeacher(req, res) {
+    var teacherid= req.params.id
+    let csgi_detailreport = {}
     console.log('getAllDetailReport: Start')
     try {
 
         if (check(teacherid).isEmail().notEmpty()) {
-            csgi_detailreport = await prisma.csgi_detailreport_v.findMany({
+            csgi_detailreport = await prisma.csgi_detailreport_v.findMany();
+                
+              /*  {
                 where: {
-                    teacheremail: teacherid,
-                }
-            })
-        }else{
-            if (parseInt(teacherid) && check(teacherid).notEmpty()) {
+                    teacheremail: {equals :teacherid, 
+                    },
+                },
+            })*/
+        }
+
+
+
+
+           /* if (parseInt(teacherid) && check(teacherid).notEmpty()) {
                 teacherid = parseInt(id)
                 csgi_detailreport = await prisma.csgi_detailreport_v.findMany({
                     where: {
                         teacherid: teacherid,
                     }
                 })
-            }else{
+            }*/
+            else{
                 console.log('Missing teacher identifier, not provided');
                 res.send(JSON.stringify({ "status": 302, "error": 'Missing teacher identifier, not provided', "response": null }));
                 return;
             }
 
-        }
-
-        res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_summaryreport}));
+            res.JSON(csgi_summaryreport);
     } catch (err) {
          console.log('getAllDetailReport error:', err)
          res.send(JSON.stringify({"status": 500, "error": err, "response": null}));
@@ -213,7 +216,7 @@ async function getSingleTeacher(req, res) {
                     teacheremail: teacherid,
                 }
             })
-        }else{
+        }
             if (parseInt(teacherid) && check(teacherid).notEmpty()) {
                 teacherid = parseInt(id)
                 csgi_detailreport = await prisma.csgi_summaryreport_v.findMany({
@@ -227,9 +230,7 @@ async function getSingleTeacher(req, res) {
                 return;
             }
 
-        }
-
-        res.send(JSON.stringify({"status": 200, "error": null, "response": csgi_summaryreport}));
+            res.send(JSON.stringify(csgi_summaryreport));
     } catch (err) {
          console.log('getAllSummaryQuarter error:', err)
          res.send(JSON.stringify({"status": 500, "error": err, "response": null}));

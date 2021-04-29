@@ -23,7 +23,7 @@ async function getAllPeriods(req, res) {
     try {
         const allAllPeriods = await prisma.csgi_period.findMany()
 
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": allAllPeriods }));
+        res.send(allAllPeriods);
         console.log('getAllPeriods: success')
     } catch (err) {
         console.log('getAllPeriods error:', err)
@@ -47,18 +47,18 @@ async function getSinglePeriod(req, res) {
         if (check(periodid).notEmpty()) {
             csgi_period = await prisma.csgi_period.findUnique({
                 where: {
-                    Periodid: parseInt(periodid),
+                    periodid: parseInt(periodid),
                 }
             })
-
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": csgi_period }));
+            
+            res.send(JSON.stringify(csgi_period));
         }else {
             console.log('Period is Empty: ', periodid);
-            res.send(JSON.stringify({ "status": 302, "error":  'Missing input identifier', "response": null }));
+            res.send({ "status": 302, "error":  'Missing input identifier', "response": null });
             return;
         }
 
-       
+        console.log('getSinglePeriod: End')
     }
     catch (err) {
         res.send(JSON.stringify({ "status": 500, "error": err, "response": null }));
@@ -115,7 +115,7 @@ async function addNewPeriod(req, res) {
                 skipDuplicates: true,
             })
             console.log('Period creation successful Periodid: ', periodCreate.periodid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": periodCreate }));
+            res.send(JSON.stringify(periodCreate));
         }
         catch (err) {
             console.log('addNewPeriod error:', err)
@@ -159,7 +159,7 @@ async function updatePeriod(req, res) {
             })
                  //res.json(post_user)
         console.log('User update successful periodId: ', periodid);
-        res.send(JSON.stringify({ "status": 200, "error": null, "response": post_period }));
+        res.send(JSON.stringify(post_period));
         } else {
                 console.log('Period is Empty: ', periodid);
                 res.send(JSON.stringify({ "status": 302, "error":  'Missing input identifier', "response": null }));
@@ -192,7 +192,7 @@ async function deletePeriod(req, res) {
             })
 
             console.log('Period deleted successful Periodid: ', periodid);
-            res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Period delete success' }));
+            res.send(JSON.stringify({ "response": 'Period delete success' }));
         } else {
                 console.log('Period periodid is Empty: ', periodid);
                 res.send(JSON.stringify({ "status": 302, "error":  'Missing input identifier', "response": null }));

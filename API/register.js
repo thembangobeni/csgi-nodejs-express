@@ -49,7 +49,7 @@ async function registerUser(req, res){
           skipDuplicates: true,
         })
         console.log('User creation successful userid: ', userCreate.userid);
-        res.send(JSON.stringify({"status": 200, "error": null, "response": userCreate}));
+        res.send(JSON.stringify(userCreate));
       }
       catch(err)
       {
