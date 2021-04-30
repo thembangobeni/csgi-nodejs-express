@@ -45,7 +45,7 @@ async function getSingleStudent(req, res) {
     try {
         // Get one Csgi_user
         if (check(studentid).notEmpty()) {
-            csgi_student = await prisma.csgi_student.findUnique({
+            csgi_student = await prisma.csgi_student.findMany({
                 where: {
                     studentid: parseInt(studentid),
                 }

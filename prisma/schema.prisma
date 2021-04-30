@@ -168,38 +168,38 @@ model csgi_alluser_v {
 }
 
 model csgi_detailreport_v {
-  classid		    Int
+  classid			  Int
   classname		  String
-  gradeid 		  Int
+  gradeid			  Int
   gradecode		  String
-  teacherid		  Int       @unique
-  teachername	  String
-  teacheremail	String
+  teacherid		  Int	@unique
+  teachername		String
+  teacheremail	String	@unique
   periodid		  Int
-  periodname	  String
-  period_date	  DateTime
-  quarter		    String
+  periodname		String
+  period_date		DateTime?  @db.Timestamptz(6)
+  quarter			  Float
   studentid		  Int
   student_name	String
-  attended		  Int
-  notattended	  Int
+  attended		  Int?
+  notattended		Int?
 }
 
 model csgi_summaryreport_v {
   classname		  String
-  gradeid		    Int
+  gradeid			  Int
   gradecode		  String
-  teacherid		  Int     @unique
-  teacheremail	String
-  teachername	  String
+  teacherid 		Int @unique
+  teacheremail	String @unique
+  teachername		String
   student_name	String
-  quarter		    String
-  no_attended	  Int
-  no_missed		  Int
+  quarter			  Float
+  no_attended		Int?
+  no_missed		  Int?
 }
 
 model csgi_teacher_v {
-  teacherid		  Int     @unique
+  teacherid		  String @unique
   teacher		    String
   teacheremail	String  @unique
   teachername	  String

@@ -9,7 +9,8 @@ const { getAllGrades, getSingleGrade, addNewGrade, updateGrade, deleteGrade } = 
 const { getAllPeriods, getSinglePeriod, addNewPeriod, updatePeriod, deletePeriod } = require('../API/period');
 const { getAllClasses, getSingleClass, addNewClass, updateClass, deleteClass } = require('../API/class');
 const { getAllRosters, getSingleRoster, addNewRoster, updateRoster, deleteRoster } = require('../API/roster');
-const { getAllTeachers, getSingleTeacher, getAllSummaryReport, getAllDetailReport, getAllSummaryQuarter } = require('../API/dbviews');
+const { getAllTeachers, getSingleTeacher } = require('../API/dbviews');
+const { getAllDetailReport, getAllSummaryQuarter } = require('../API/reportdetail');
 const { login } = require('../API/authenticate');
 const { registerUser } = require('../API/register');
 var cors = require('cors');
@@ -18,11 +19,6 @@ const morgan = require('morgan');
 
 /* still to do Menu, MenuRole,UserRole
 //const { login, logout, getAllUsers, getSingleUser, registerUser, updateUser, deleteUser } = require('../API/users');
-const { getAllClasses, getSingleClass, addNewClass, updateClass, deleteClass } = require('./API/class');
-const { getAllRosters, getSingleRoster, addNewRoster, updateRoster, deleteRoster } = require('./API/roster');
-const { getAllGrades, getSingleGrade, addNewGrade, updateGrade, deleteGrade } = require('./API/grade');
-const { getAllRooms, getSingleRoom, addNewRoom, updateRoom, deleteRoom } = require('./API/room');
-const {getAllPeriods, getSinglePeriod, addNewPeriod, updatePeriod, deletePeriod } = require('./API/period');
 */
 const prisma = new PrismaClient()
 const app = express()
@@ -96,9 +92,8 @@ app.delete('/api/period/:id',deletePeriod);
 // ####################### Report: ###########################
 app.get('/api/dbviews',getAllTeachers);
 app.get('/api/dbviews/:id',getSingleTeacher);
-app.get('/api/dbviews/:id/:classid/',getAllSummaryReport);     // 
-app.get('/api/dbviews/:id/:classid/:gradeid',getAllDetailReport);    //
-app.get('/api/dbviews/:id/:classid/:gradeid/:quarter',getAllSummaryQuarter);  //
+app.get('/api/reportdetail/:id',getAllDetailReport); 
+app.get('/api/reportdetail/:id/:classid/:gradeid/:quarter',getAllSummaryQuarter);
 
 
 app.listen(3000, () =>
